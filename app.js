@@ -11,8 +11,17 @@ function createGrid(length){
     {
         const box = document.createElement("div");
         box.classList.add("box");
+        box.dataset.opacity = 0;
         container.appendChild(box);
     }
+}
+
+
+function getColor(){
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    return `rgb(${r}, ${g}, ${b})`;
 }
 
 button.addEventListener("click", () => {
@@ -29,7 +38,17 @@ button.addEventListener("click", () => {
 
 container.addEventListener("mouseover", (event) => {
     if (event.target.classList.contains("box")) {
-        event.target.style.backgroundColor = "black";
+        let currentOpacity = Number(event.target.dataset.opacity);
+
+        if (currentOpacity == 0){
+            event.target.style.backgroundColor = getColor();
+        }
+
+        if (currentOpacity < 1){
+            currentOpacity = currentOpacity + 0.1;
+            event.target.dataset.opacity = currentOpacity;
+            event.target.style.opacity = currentOpacity;
+        }
     }
 });
 
